@@ -1,4 +1,4 @@
-//import stats from '../universalVariables.mjs';
+//import stats from '../globals/index.mjs';
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 

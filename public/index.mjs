@@ -1,5 +1,5 @@
 import states from './states/index.mjs';
-import globals from './universalVariables.mjs';
+import globals from './index.mjs';
 import keyMappings from './keyMappings.mjs';
 
 globals.currentState = 'main';

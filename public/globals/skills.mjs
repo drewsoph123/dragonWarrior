@@ -1,12 +1,21 @@
-import stats from './universalVariables.mjs';
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
+import baseStats from './baseStats.mjs';
+exports.skills = [
+  { name: 'heal', useHeal },
+  { name: 'hurt', useHurt },
+  { name: 'sleep', useSleep },
+  { name: 'stopSpell', useStopSpell },
+  { name: 'healMore', useHealMore },
+  { name: 'hurtMore', useHurtMore },
+];
+
 function useHeal() {
-  if (stats.currentMp >= 4) {
-    if (stats.currentHp < stats.maxHp) {
-      Math.min((stats.currentHp += 15), stats.maxHp);
-      stats.currentMp -= 4;
+  if (baseStats.currentMp >= 4) {
+    if (baseStats.currentHp < baseStats.maxHp) {
+      Math.min((baseStats.currentHp += 15), baseStats.maxHp);
+      baseStats.currentMp -= 4;
     }
   } else {
     ctx.font = '14px Arial';
@@ -16,23 +25,23 @@ function useHeal() {
 }
 
 function useHurt() {
-  if ((state = battle)) {
-    if (stats.currentMp >= 2) {
-      if (Math.random() <= stats.accuracy) {
+  if ((baseStats.currentState = 'battle')) {
+    if (baseStats.currentMp >= 2) {
+      if (Math.random() <= baseStats.accuracy) {
         damage = 10;
       } else {
         ctx.font = '14px Arial';
         ctx.fillStyle = '#0095DD';
         ctx.fillText('YOU MISSED!', canvas.width - 180, 45);
       }
-      stats.currentMp -= 2;
+      baseStats.currentMp -= 2;
     }
   }
 }
 function useSleep() {
-  if ((state = battle)) {
-    if (stats.currentMp >= 2) {
-      if (Math.random() <= stats.accuracy) {
+  if ((baseStats.currentState = battle)) {
+    if (baseStats.currentMp >= 2) {
+      if (Math.random() <= baseStats.accuracy) {
         //Opponent Falls Asleep
         ctx.font = '14px Arial';
         ctx.fillStyle = '#0095DD';
@@ -48,9 +57,9 @@ function useSleep() {
 }
 
 function useStopSpell() {
-  if ((state = battle)) {
-    if (stats.currentMp >= 2) {
-      if (Math.random() <= stats.accuracy) {
+  if ((baseStats.currentState = battle)) {
+    if (baseStats.currentMp >= 2) {
+      if (Math.random() <= baseStats.accuracy) {
         //Opponent Spells Stopped
         ctx.font = '14px Arial';
         ctx.fillStyle = '#0095DD';
@@ -66,10 +75,10 @@ function useStopSpell() {
 }
 
 function useHealMore() {
-  if (stats.currentMp >= 10) {
-    if (stats.currentHp < stats.maxHp) {
-      Math.min((stats.currentHp += 85), stats.maxHp);
-      stats.currentMp -= 10;
+  if (baseStats.currentMp >= 10) {
+    if (baseStats.currentHp < baseStats.maxHp) {
+      Math.min((baseStats.currentHp += 85), baseStats.maxHp);
+      baseStats.currentMp -= 10;
     }
   } else {
     ctx.font = '14px Arial';
@@ -79,16 +88,16 @@ function useHealMore() {
 }
 
 function useHurtMore() {
-  if ((state = battle)) {
-    if (stats.currentMp >= 5) {
-      if (Math.random() <= stats.accuracy) {
-        stats.damage = 60;
+  if ((baseStats.currentState = battle)) {
+    if (baseStats.currentMp >= 5) {
+      if (Math.random() <= baseStats.accuracy) {
+        baseStats.damage = 60;
       } else {
         ctx.font = '14px Arial';
         ctx.fillStyle = '#0095DD';
         ctx.fillText('YOU MISSED!', canvas.width - 180, 45);
       }
-      stats.currentMp -= 5;
+      baseStats.currentMp -= 5;
     }
   }
 }
