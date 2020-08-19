@@ -90,7 +90,7 @@ function openCharState() {
 }
 
 function drawHero() {
-  hero.src = './Sprites/NESDragonWarriorCharactersUSA.png';
+  hero.src = './sprites/NESDragonWarriorCharactersUSA.png';
   ctx.drawImage(
     hero,
     spriteX,
