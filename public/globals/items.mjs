@@ -54,42 +54,45 @@ function useAntidotes() {
     ctx.fillText('UNABLE TO USE, YOU ARE NOT POISONED!', baseStats.distanceBetweenStuffX, 45);
   }
 }
+function startTimer() {
+  var presentTime = document.getElementById('timer').innerHTML;
+  var timeArray = presentTime.split(/[:]+/);
+  var m = timeArray[0];
+  var s = checkSecond(timeArray[1] - 1);
+  if (s == 59) {
+    m = m - 1;
+  }
+  //if(m<0){alert('timer completed')}
+
+  document.getElementById('timer').innerHTML = m + ':' + s;
+  setTimeout(startTimer, 1000);
+}
+
+function checkSecond(sec) {
+  if (sec < 10 && sec >= 0) {
+    sec = '0' + sec;
+  } // add zero in front of numbers < 10
+  if (sec < 0) {
+    sec = '59';
+  }
+  return sec;
+}
 
 function useIncense() {
   const availableItems = items.filter((item) => item.quantity);
   availableItems[baseStats.availableItemSelected].quantity -= 1;
-  var endDate = new Date('Mar 15, 2021 12:00:00').getTime();
-
-  var timer = setInterval(function () {
-    let now = newDate().getTime();
-    let t = endDate - now;
-
-    if (t >= 0) {
-      let days = Math.floor(t / (1000 * 60 * 60 * 24));
-      let hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let mins = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
-      let secs = Math.floor((t % (1000 * 60)) / 1000);
-
-      document.getElementById('timer-days').innerHTML = days + "<span class='label'>DAY(S)</span>";
-
-      document.getElementById('timer-hours').innerHTML =
-        ('0' + hours).slice(-2) + "<span class='label'>HR(S)</span>";
-
-      document.getElementById('timer-mins').innerHTML =
-        ('0' + mins).slice(-2) + "<span class='label'>MIN(S)</span>";
-
-      document.getElementById('timer-secs').innerHTML =
-        ('0' + secs).slice(-2) + "<span class='label'>SEC(S)</span>";
-    } else {
-      document.getElementById('timer').innerHTML = 'The countdown is over!';
-    }
-  }, 1000);
+  document.getElementById('timer').innerHTML = '005' + ':' + 0;
+  startTimer();
+  checkSecond();
   baseStats.battleOdds += 0.2;
 }
 
 function useRepel() {
   const availableItems = items.filter((item) => item.quantity);
   availableItems[baseStats.availableItemSelected].quantity -= 1;
+  document.getElementById('timer').innerHTML = '005' + ':' + 0;
+  startTimer();
+  checkSecond();
   baseStats.battleOdds -= 0.2;
 }
 

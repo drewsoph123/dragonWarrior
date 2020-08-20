@@ -14,6 +14,8 @@ const selectBoxWidth = canvas.width * 0.45;
 const selectBoxHeight = canvas.height * 0.08;
 
 export default {
+  repelSteps: 0,
+  incenseSteps: 0,
   availableItemSelected: 0,
   maxMp,
   currentMp: 6,

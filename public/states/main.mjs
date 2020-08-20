@@ -59,7 +59,18 @@ var waterSpriteHeight = 15;
 
 //var availableTalk = false;
 //var availableChest = false;
-
+function startBattle() {
+  if (Math.random() < 0.25) {
+    states.currentState = 'battle';
+  }
+}
+function stepCounter() {
+  if (stats.baseStats.incenseSteps > 0) {
+    stats.baseStats.incenseSteps -= 1;
+  } else if (stats.baseStats.repelSteps > 0) {
+    stats.baseStats.repelSteps -= 1;
+  }
+}
 function mainRight() {
   if (stats.mainMap[heroMainMapLocationY][heroMainMapLocationX + 1] === 0) {
     heroMainMapLocationX += 1;
@@ -67,9 +78,8 @@ function mainRight() {
     heroSpriteY = 4;
     heroSpriteWidth = 15;
     heroSpriteHeight = 15;
-    if (Math.random() < 0.25) {
-      states.currentState = 'battle';
-    }
+    startBattle();
+    stepCounter();
   }
 }
 function mainLeft() {
@@ -79,6 +89,8 @@ function mainLeft() {
     heroSpriteY = 4;
     heroSpriteWidth = 15;
     heroSpriteHeight = 15;
+    startBattle();
+    stepCounter();
   }
 }
 function mainUp() {
@@ -88,6 +100,8 @@ function mainUp() {
     heroSpriteY = 4;
     heroSpriteWidth = 15;
     heroSpriteHeight = 15;
+    startBattle();
+    stepCounter();
   }
 }
 function mainDown() {
@@ -97,6 +111,8 @@ function mainDown() {
     heroSpriteY = 4;
     heroSpriteWidth = 15;
     heroSpriteHeight = 15;
+    startBattle();
+    stepCounter();
   }
 }
 function openSkillState() {
