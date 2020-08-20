@@ -1,18 +1,18 @@
-import main from './mainState.mjs';
-import char from './charState.mjs';
-import items from './itemsState.mjs';
-import talk from './talkState.mjs';
-import skills from './skillsState.mjs';
-import equip from './equipState.mjs';
-import itemConfirm from './itemConfirmState.mjs';
-import skillConfirm from './skillConfirmState.mjs';
-import battle from './battleMainState.mjs';
-import battleAttackConfirm from './BattleAttackConfirmState.mjs';
-import battleSkillSelect from './battleSkillsSelectState.mjs';
-import battleSkillConfirm from './battleSkillsConfirmState.mjs';
-import battleItemsSelect from './battleItemsSelectState.mjs';
-import battleItemsConfirm from './battleItemsConfirmState.mjs';
-import battleRunConfirm from './battleRunConfirmState.mjs';
+import main from './main.mjs';
+import char from './char.mjs';
+import items from './items.mjs';
+import talk from './talk.mjs';
+import skills from './skills.mjs';
+import equip from './equip.mjs';
+import itemConfirm from './itemConfirm.mjs';
+import skillConfirm from './skillConfirm.mjs';
+import battle from './battle.mjs';
+import battleAttackConfirm from './battleAttackConfirm.mjs';
+import battleSkillSelect from './battleSkillsSelect.mjs';
+import battleSkillConfirm from './battleSkillsConfirm.mjs';
+import battleItemsSelect from './battleItemsSelect.mjs';
+import battleItemsConfirm from './battleItemsConfirm.mjs';
+import battleRunConfirm from './battleRunConfirm.mjs';
 
 export default {
   main,

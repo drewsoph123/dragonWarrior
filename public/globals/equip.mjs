@@ -1,4 +1,4 @@
-exports.equip = [
+export const equip = [
   { name: 'stick', damage: 2 },
   { name: 'club', damage: 4 },
   { name: 'copperSword', damage: 10 },

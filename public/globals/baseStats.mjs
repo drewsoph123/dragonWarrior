@@ -1,9 +1,22 @@
-const lvl = 0;
+var canvas = document.getElementById('myCanvas');
+
+const lvl = 1;
+const distanceBetweenStuffX = canvas.width * 0.1;
+const distanceBetweenStuffY = canvas.height * 0.1;
 const maxHp = lvl * 7 + 3;
+const maxMp = lvl * 6;
+const damage = lvl * 4 + 1;
+const def = lvl * 4;
+const speed = lvl + 4;
+const selectBoxX = canvas.width * 0.05;
+const selectBoxY = canvas.height * 0.05;
+const selectBoxWidth = canvas.width * 0.45;
+const selectBoxHeight = canvas.height * 0.08;
 
 export default {
-  currentState: 'main',
-  currentMp: 0,
+  availableItemSelected: 0,
+  maxMp,
+  currentMp: 6,
   lvl,
   exp: 0,
   nextLevel: 0,
@@ -14,17 +27,18 @@ export default {
   resist: 25,
   status: 'healthy',
   battleOdds: 0.25,
-  selectBoxX: 30,
-  selectBoxY: 30,
-  selectBoxWidth: 100,
-  selectBoxHeight: 100,
+  selectBoxX,
+  selectBoxY,
+  selectBoxWidth,
+  selectBoxHeight,
   totalSkills: 0,
   totalItems: 0,
-  distanceBetweenStuff: 30,
-  damage: lvl * 4 + 1,
+  chest: false,
+  distanceBetweenStuffX,
+  distanceBetweenStuffY,
+  damage,
   maxHp,
-  currentHp: maxHp,
-  def: lvl * 4,
-  speed: lvl + 4,
-  maxMp: Math.max(lvl * 7 - 14, 0),
+  currentHp: 6,
+  def,
+  speed,
 };
