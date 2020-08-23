@@ -5,10 +5,12 @@ var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
 function drawItemConfirm() {
+  const availableItems = stats.items.filter((item) => item.quantity);
+
   ctx.font = 'bold 14px Arial';
   ctx.fillStyle = '#000000';
   ctx.fillText(
-    'USE ITEM',
+    'USE ' + availableItems[stats.baseStats.availableItemSelected].name,
     stats.baseStats.distanceBetweenStuffX,
     stats.baseStats.distanceBetweenStuffY
   );
@@ -20,17 +22,14 @@ function drawItemConfirm() {
 }
 
 function mainUp() {
-  if (stats.baseStats.selectBoxY > stats.baseStats.distanceBetweenStuffY / 2) {
-    stats.baseStats.selectBoxY = canvas.height * 0.05;
-  }
+  stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
 }
 function mainDown() {
-  if (stats.baseStats.selectBoxY != stats.baseStats.distanceBetweenStuffY * 2) {
-    stats.baseStats.selectBoxY = stats.baseStats.distanceBetweenStuffY * 2 - canvas.height * 0.05;
-  }
+  stats.baseStats.selectBoxY =
+    stats.baseStats.distanceBetweenStuffY * 2 - stats.baseStats.selectBoxStartingY;
 }
 function makeSelection() {
-  if ((stats.baseStats.selectBoxY = canvas.height * 0.05)) {
+  if ((stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY)) {
     const availableItems = stats.items.filter((item) => item.quantity);
     availableItems[stats.baseStats.availableItemSelected].use();
     stats.baseStats.availableItemSelected = 0;
@@ -38,26 +37,23 @@ function makeSelection() {
   }
 }
 function openItemsMenu() {
-  stats.baseStats.selectBoxY = canvas.height * 0.05;
+  stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
   states.currentState = 'items';
 }
-function drawBox() {
-  ctx.beginPath();
-  ctx.rect(
-    stats.baseStats.selectBoxX,
-    stats.baseStats.selectBoxY,
-    stats.baseStats.selectBoxWidth,
-    stats.baseStats.selectBoxHeight
-  );
-  ctx.stroke();
-  ctx.closePath();
+function setButtons() {
+  stats.baseStats.dButton = 'D: BACK';
+  stats.baseStats.rButton = '';
+  stats.baseStats.gButton = 'G: CONFIRM';
+  stats.baseStats.vButton = '';
 }
 
 export default {
   run: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawItemConfirm();
-    drawBox();
+    setButtons();
+    stats.functions.drawButtons();
+    stats.functions.drawBox();
   },
 
   up: mainUp,

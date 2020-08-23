@@ -8,10 +8,10 @@ import itemConfirm from './itemConfirm.mjs';
 import skillConfirm from './skillConfirm.mjs';
 import battle from './battle.mjs';
 import battleAttackConfirm from './battleAttackConfirm.mjs';
-import battleSkillSelect from './battleSkillsSelect.mjs';
-import battleSkillConfirm from './battleSkillsConfirm.mjs';
-import battleItemsSelect from './battleItemsSelect.mjs';
-import battleItemsConfirm from './battleItemsConfirm.mjs';
+import battleSkills from './battleSkills.mjs';
+import battleSkillConfirm from './battleSkillConfirm.mjs';
+import battleItems from './battleItems.mjs';
+import battleItemConfirm from './battleItemConfirm.mjs';
 import battleRunConfirm from './battleRunConfirm.mjs';
 
 export default {
@@ -25,9 +25,9 @@ export default {
   skillConfirm,
   battle,
   battleAttackConfirm,
-  battleSkillSelect,
+  battleSkills,
   battleSkillConfirm,
-  battleItemsSelect,
-  battleItemsConfirm,
+  battleItems,
+  battleItemConfirm,
   battleRunConfirm,
 };

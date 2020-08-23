@@ -15,17 +15,13 @@ function confirmSkillsAvailable() {
     }
   });
   if (availableSkills == 0) {
-    states.currentState = 'main';
+    states.currentState = 'battle';
   }
 }
 
 function drawSkills() {
   const availableSkills = stats.skills.filter((skill) => {
-    if (
-      skill.mp <= stats.baseStats.currentMp &&
-      skill.lvl <= stats.baseStats.lvl &&
-      skill.battleOnly == false
-    ) {
+    if (skill.mp <= stats.baseStats.currentMp && skill.lvl <= stats.baseStats.lvl) {
       return true;
     }
   });
@@ -48,30 +44,27 @@ function mainUp() {
 }
 function mainDown() {
   const availableSkills = stats.skills.filter((skill) => {
-    if (
-      skill.mp <= stats.baseStats.currentMp &&
-      skill.lvl <= stats.baseStats.lvl &&
-      skill.battleOnly == false
-    ) {
+    if (skill.mp <= stats.baseStats.currentMp && skill.lvl <= stats.baseStats.lvl) {
       return true;
     }
   });
   if (
     stats.baseStats.selectBoxY <
-    availableSkills.length * stats.baseStats.distanceBetweenStuffY - stats.baseStats.selectBoxStartingY
+    availableSkills.length * stats.baseStats.distanceBetweenStuffY -
+      stats.baseStats.selectBoxStartingY
   ) {
     stats.baseStats.selectBoxY += stats.baseStats.distanceBetweenStuffY;
     stats.baseStats.availableSkillSelected += 1;
   }
 }
-function openMainState() {
+function openBattleState() {
   stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
   stats.baseStats.availableSkillSelected = 0;
-  states.currentState = 'main';
+  states.currentState = 'battle';
 }
-function openSkillConfirmState() {
+function openBattleSkillConfirmState() {
   stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
-  states.currentState = 'skillConfirm';
+  states.currentState = 'battleSkillConfirm';
 }
 function setButtons() {
   stats.baseStats.dButton = 'D: BACK';
@@ -92,6 +85,6 @@ export default {
 
   up: mainUp,
   down: mainDown,
-  d: openMainState,
-  g: openSkillConfirmState,
+  d: openBattleState,
+  g: openBattleSkillConfirmState,
 };

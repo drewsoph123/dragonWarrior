@@ -19,32 +19,64 @@ function drawBattleAttackConfirm() {
   );
 }
 function mainUp() {
-  if (stats.baseStats.selectBoxY != stats.baseStats.distanceBetweenStuffY) {
-    stats.baseStats.selectBoxY = stats.baseStats.distanceBetweenStuffY;
+  if (stats.baseStats.selectBoxY != stats.baseStats.selectBoxStartingY) {
+    stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
   }
 }
 function mainDown() {
-  if (stats.baseStats.selectBoxY != stats.baseStats.distanceBetweenStuffY * 2) {
-    stats.baseStats.selectBoxY = stats.baseStats.distanceBetweenStuffY * 2;
+  if (stats.baseStats.selectBoxY == stats.baseStats.selectBoxStartingY) {
+    stats.baseStats.selectBoxY =
+      stats.baseStats.distanceBetweenStuffY + stats.baseStats.selectBoxStartingY;
   }
 }
-function openSkillsMenu() {
-  stats.baseStats.selectBoxY = stats.baseStats.distanceBetweenStuffY;
-  states.currentState = 'skills';
-}
-function confirmChoice() {
-  //not sure how to write this. Do highlighted selection.
-  stats.baseStats.selectBoxY = stats.baseStats.distanceBetweenStuffY;
+function openBattleMenu() {
+  stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
   states.currentState = 'battle';
 }
+function confirmChoice() {
+  if ((stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY)) {
+    stats.baseStats.attackName = 'ATTACK';
+    if (Math.random() < stats.baseStats.accuracy) {
+      stats.baseStats.damageDealt =
+        stats.baseStats.baseDamage + stats.equip.weapon[stats.baseStats.currentWeapon];
+      stats.baseStats.battleMessageToDisplayPartOne = `YOU HIT THE ${stats.baseStats.enemyName} WITH`;
+      stats.baseStats.battleMessageToDisplayPartTwo = `${stats.baseStats.attackName} AND DID ${stats.baseStats.damageDealt} DAMAGE`;
+      stats.baseStats.battleMessageToDisplayPartThree = '';
+      stats.baseStats.enemyHp -= stats.baseStats.damageDealt;
+      stats.baseStats.damageDealt = 0;
+      if (stats.baseStats.enemyHp > 0) {
+        stats.baseStats.enemyTurn = true;
+      } else {
+        stats.baseStats.battleMessage = 1;
+      }
+    } else {
+      stats.baseStats.battleMessageToDisplayPartOne = `YOUR ${stats.baseStats.attackName} MISSED THE ${stats.baseStats.enemyName}`;
+      stats.baseStats.battleMessageToDisplayPartTwo = '';
+      stats.baseStats.battleMessageToDisplayPartThree = '';
+      stats.baseStats.enemyTurn = true;
+    }
+  }
+  stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
+  states.currentState = 'battle';
+}
+function setButtons() {
+  stats.baseStats.dButton = 'D: BACK';
+  stats.baseStats.rButton = '';
+  stats.baseStats.gButton = 'G: CONFIRM';
+  stats.baseStats.vButton = '';
+}
+
 export default {
   run: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBattleAttackConfirm();
+    setButtons();
+    stats.functions.drawButtons();
+    stats.functions.drawBox();
   },
 
   up: mainUp,
   down: mainDown,
-  d: openSkillsMenu,
+  d: openBattleMenu,
   g: confirmChoice,
 };

@@ -12,8 +12,6 @@ var heroSpriteX = 4;
 var heroSpriteY = 4;
 var heroSpriteWidth = 15;
 var heroSpriteHeight = 15;
-var heroMainMapLocationX = 15;
-var heroMainMapLocationY = 15;
 var villager = new Image();
 var villagerHeight = 20;
 var villagerWidth = 20;
@@ -23,6 +21,15 @@ var villagerSpriteX = 3;
 var villagerSpriteY = 165;
 var villagerSpriteWidth = 17;
 var villagerSpriteHeight = 17;
+var mainMap = new Image();
+var mainMapHeight = 2700;
+var mainMapWidth = 2720;
+var mainMapX = 0;
+var mainMapY = 0;
+var mainMapSpriteX = 0;
+var mainMapSpriteY = 0;
+var mainMapSpriteWidth = 2176;
+var mainMapSpriteHeight = 2160;
 var shopWorker = new Image();
 var shopWorkerHeight = 20;
 var shopWorkerWidth = 20;
@@ -41,76 +48,101 @@ var soldierSpriteX = 4;
 var soldierSpriteY = 130;
 var soldierSpriteWidth = 16;
 var soldierSpriteHeight = 15;
-var grass = new Image();
-var grassHeight = 20;
-var grassWidth = 20;
-var grassSpriteX = 400;
-var grassSpriteY = 400;
-var grassSpriteWidth = 15;
-var grassSpriteHeight = 15;
-var water = new Image();
-var waterHeight = 20;
-var waterWidth = 20;
-var waterSpriteX = 4;
-var waterSpriteY = 4;
-var waterSpriteWidth = 15;
-var waterSpriteHeight = 15;
-//var heroPosition = stats.mainMap[(15, 15)];
+// var grass = new Image();
+// var grassHeight = 20;
+// var grassWidth = 20;
+// var grassSpriteX = 400;
+// var grassSpriteY = 400;
+// var grassSpriteWidth = 15;
+// var grassSpriteHeight = 15;
+// var water = new Image();
+// var waterHeight = 20;
+// var waterWidth = 20;
+// var waterSpriteX = 4;
+// var waterSpriteY = 4;
+// var waterSpriteWidth = 15;
+// var waterSpriteHeight = 15;
+// var heroPosition = stats.mainMap[(15, 15)];
 
-//var availableTalk = false;
-//var availableChest = false;
+// var availableTalk = false;
+// var availableChest = false;
 function startBattle() {
-  if (Math.random() < 0.25) {
+  if (
+    Math.random() <
+    stats.baseStats.battleOdds + stats.baseStats.repelEffect + stats.baseStats.incenseEffect
+  )
     states.currentState = 'battle';
-  }
 }
 function stepCounter() {
   if (stats.baseStats.incenseSteps > 0) {
     stats.baseStats.incenseSteps -= 1;
   } else if (stats.baseStats.repelSteps > 0) {
     stats.baseStats.repelSteps -= 1;
+  } else {
+    stats.baseStats.repelEffect = 0;
+    stats.baseStats.incenseEffect = 0;
   }
 }
 function mainRight() {
-  if (stats.mainMap[heroMainMapLocationY][heroMainMapLocationX + 1] === 0) {
-    heroMainMapLocationX += 1;
+  if (
+    stats.mainMap[stats.baseStats.heroMainMapLocationY][
+      stats.baseStats.heroMainMapLocationX + 1
+    ] === 0
+  ) {
+    stats.baseStats.heroMainMapLocationX += 1;
     heroSpriteX = 94;
     heroSpriteY = 4;
     heroSpriteWidth = 15;
     heroSpriteHeight = 15;
+    mainMapX -= 20;
     startBattle();
     stepCounter();
   }
 }
 function mainLeft() {
-  if (stats.mainMap[heroMainMapLocationY][heroMainMapLocationX - 1] === 0) {
-    heroMainMapLocationX -= 1;
+  if (
+    stats.mainMap[stats.baseStats.heroMainMapLocationY][
+      stats.baseStats.heroMainMapLocationX - 1
+    ] === 0
+  ) {
+    stats.baseStats.heroMainMapLocationX -= 1;
     heroSpriteX = 34;
     heroSpriteY = 4;
     heroSpriteWidth = 15;
     heroSpriteHeight = 15;
+    mainMapX += 20;
     startBattle();
     stepCounter();
   }
 }
 function mainUp() {
-  if (stats.mainMap[heroMainMapLocationY - 1][heroMainMapLocationX] === 0) {
-    heroMainMapLocationY -= 1;
+  if (
+    stats.mainMap[stats.baseStats.heroMainMapLocationY - 1][
+      stats.baseStats.heroMainMapLocationX
+    ] === 0
+  ) {
+    stats.baseStats.heroMainMapLocationY -= 1;
     heroSpriteX = 62;
     heroSpriteY = 4;
     heroSpriteWidth = 15;
     heroSpriteHeight = 15;
+    mainMapY += 20;
     startBattle();
     stepCounter();
   }
 }
 function mainDown() {
-  if (stats.mainMap[heroMainMapLocationY + 1][heroMainMapLocationX] === 0) {
-    heroMainMapLocationY += 1;
+  if (
+    stats.mainMap[stats.baseStats.heroMainMapLocationY + 1][
+      stats.baseStats.heroMainMapLocationX
+    ] === 0
+  ) {
+    stats.baseStats.heroMainMapLocationY += 1;
     heroSpriteX = 4;
     heroSpriteY = 4;
     heroSpriteWidth = 15;
     heroSpriteHeight = 15;
+    mainMapY -= 20;
     startBattle();
     stepCounter();
   }
@@ -198,8 +230,8 @@ function drawHp() {
   ctx.fillStyle = '#000000';
   ctx.fillText(
     'HP: ' + stats.baseStats.currentHp + '/' + stats.baseStats.maxHp,
-    canvas.width * 0.05,
-    canvas.height * 0.05
+    stats.locations.mainGeneralStartingX,
+    stats.locations.mainGeneralStartingY
   );
 }
 
@@ -208,21 +240,29 @@ function drawMp() {
   ctx.fillStyle = '#000000';
   ctx.fillText(
     'MP: ' + stats.baseStats.currentMp + ' / ' + stats.baseStats.maxMp,
-    canvas.width * 0.05,
-    canvas.height * 0.1
+    stats.locations.mainGeneralStartingX,
+    stats.locations.mainGeneralStartingY * 2
   );
 }
 
 function drawGold() {
   ctx.font = 'bold 14px Arial';
   ctx.fillStyle = '#000000';
-  ctx.fillText('Gold: ' + stats.baseStats.gold, canvas.width * 0.05, canvas.height * 0.15);
+  ctx.fillText(
+    'Gold: ' + stats.baseStats.gold,
+    stats.locations.mainGeneralStartingX,
+    stats.locations.mainGeneralStartingY * 3
+  );
 }
 
 function drawLvl() {
   ctx.font = 'bold 14px Arial';
   ctx.fillStyle = '#000000';
-  ctx.fillText('LVL: ' + stats.baseStats.lvl, canvas.width * 0.05, canvas.height * 0.2);
+  ctx.fillText(
+    'LVL: ' + stats.baseStats.lvl,
+    stats.locations.mainGeneralStartingX,
+    stats.locations.mainGeneralStartingY * 4
+  );
 }
 
 function drawNextLevel() {
@@ -230,54 +270,91 @@ function drawNextLevel() {
   ctx.fillStyle = '#000000';
   ctx.fillText(
     'NEXT LEVEL: ' + stats.baseStats.nextLevel,
-    canvas.width * 0.05,
-    canvas.height * 0.25
+    stats.locations.mainGeneralStartingX,
+    stats.locations.mainGeneralStartingY * 5
   );
 }
 
-function drawButtons() {
-  ctx.font = 'bold 14px Arial';
-  ctx.fillStyle = '#000000';
-  ctx.fillText('D: SKILLS', canvas.width * 0.05, canvas.height * 0.9);
-  ctx.fillText('G: TALK', canvas.width * 0.25, canvas.height * 0.9);
-  ctx.fillText('R: ITEMS', canvas.width * 0.15, canvas.height * 0.85);
-  ctx.fillText('V: CHAR', canvas.width * 0.15, canvas.height * 0.95);
+function drawRepelStepsRemaining() {
+  if (stats.baseStats.repelSteps > 0) {
+    ctx.font = 'bold 14px Arial';
+    ctx.fillStyle = '#000000';
+    ctx.fillText(
+      'REPEL STEPS: ' + stats.baseStats.repelSteps,
+      canvas.width * 0.65,
+      stats.locations.mainGeneralStartingY
+    );
+  }
 }
-
-function drawMainMap() {
-  for (let row = heroMainMapLocationY - 10; row < heroMainMapLocationY + 11; row++) {
-    for (let col = heroMainMapLocationX - 10; col < heroMainMapLocationX + 11; col++) {
-      if (stats.mainMap[row][col] === 1) {
-        water.src = './sprites/NESDragonWarriorOverworld.png';
-        ctx.drawImage(
-          water,
-          waterSpriteX,
-          waterSpriteY,
-          waterSpriteWidth,
-          waterSpriteHeight,
-          (col - (heroMainMapLocationX - 10)) * 20,
-          (row - (heroMainMapLocationY - 10)) * 20,
-          waterWidth,
-          waterHeight
-        );
-      } else if (stats.mainMap[row][col] === 0) {
-        grass.src = './sprites/NESDragonWarriorOverworld.png';
-        ctx.drawImage(
-          grass,
-          grassSpriteX,
-          grassSpriteY,
-          grassSpriteWidth,
-          grassSpriteHeight,
-          (col - (heroMainMapLocationX - 10)) * 20,
-          (row - (heroMainMapLocationY - 10)) * 20,
-          grassWidth,
-          grassHeight
-        );
-      }
-    }
+function drawIncenseStepsRemaining() {
+  if (stats.baseStats.incenseSteps > 0) {
+    ctx.font = 'bold 14px Arial';
+    ctx.fillStyle = '#000000';
+    ctx.fillText(
+      'INCENSE STEPS: ' + stats.baseStats.incenseSteps,
+      canvas.width * 0.65,
+      stats.locations.mainGeneralStartingY * 2
+    );
   }
 }
 
+function drawMainMap() {
+  mainMap.src = './sprites/NESDragonWarriorOverworld.png';
+  ctx.drawImage(
+    mainMap,
+    mainMapSpriteX,
+    mainMapSpriteY,
+    mainMapSpriteWidth,
+    mainMapSpriteHeight,
+    mainMapX,
+    mainMapY,
+    mainMapWidth,
+    mainMapHeight
+  );
+  // for (
+  //   let row = stats.baseStats.heroMainMapLocationY - 10;
+  //   row < stats.baseStats.heroMainMapLocationY + 11;
+  //   row++
+  // ) {
+  //   for (
+  //     let col = stats.baseStats.heroMainMapLocationX - 10;
+  //     col < stats.baseStats.heroMainMapLocationX + 11;
+  //     col++
+  //   ) {
+  // if (stats.mainMap[row][col] === 1) {
+  //   water.src = './sprites/NESDragonWarriorOverworld.png';
+  //   ctx.drawImage(
+  //     water,
+  //     waterSpriteX,
+  //     waterSpriteY,
+  //     waterSpriteWidth,
+  //     waterSpriteHeight,
+  //     (col - (stats.baseStats.heroMainMapLocationX - 10)) * 20,
+  //     (row - (stats.baseStats.heroMainMapLocationY - 10)) * 20,
+  //     waterWidth,
+  //     waterHeight
+  //   );
+  // } else if (stats.mainMap[row][col] === 0) {
+  //   grass.src = './sprites/NESDragonWarriorOverworld.png';
+  //   ctx.drawImage(
+  //     grass,
+  //     grassSpriteX,
+  //     grassSpriteY,
+  //     grassSpriteWidth,
+  //     grassSpriteHeight,
+  //     (col - (stats.baseStats.heroMainMapLocationX - 10)) * 20,
+  //     (row - (stats.baseStats.heroMainMapLocationY - 10)) * 20,
+  //     grassWidth,
+  //     grassHeight
+  //   );
+  //}
+}
+function setButtons() {
+  stats.baseStats.dButton = 'D: SKILLS';
+  stats.baseStats.rButton = 'R: ITEMS';
+  stats.baseStats.gButton = 'G: TALK';
+  stats.baseStats.vButton = 'V: CHAR';
+}
 export default {
   run: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -291,7 +368,10 @@ export default {
     drawGold();
     drawLvl();
     drawNextLevel();
-    drawButtons();
+    setButtons();
+    stats.functions.drawButtons();
+    drawIncenseStepsRemaining();
+    drawRepelStepsRemaining();
   },
   right: mainRight,
   left: mainLeft,

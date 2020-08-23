@@ -8,46 +8,45 @@ function drawEquipState() {
   ctx.font = 'bold 14px Arial';
   ctx.fillStyle = '#000000';
   ctx.fillText(
-    'WEAPON: ' + stats.weapon,
+    `WEAPON: ${stats.baseStats.currentWeapon} - ${
+      stats.equip.weapon[stats.baseStats.currentWeapon]
+    } DAMAGE`,
     stats.baseStats.distanceBetweenStuffX,
     stats.baseStats.distanceBetweenStuffY
   );
   ctx.fillText(
-    'SHIELD: ' + stats.shield,
+    `SHIELD: ${stats.baseStats.currentShield} - ${
+      stats.equip.shield[stats.baseStats.currentShield]
+    } DEFENSE`,
     stats.baseStats.distanceBetweenStuffX,
     stats.baseStats.distanceBetweenStuffY * 2
   );
   ctx.fillText(
-    'ARMOR: ' + stats.armor,
+    `ARMOR: ${stats.baseStats.currentArmor} - ${
+      stats.equip.armor[stats.baseStats.currentArmor]
+    } DEFENSE`,
     stats.baseStats.distanceBetweenStuffX,
     stats.baseStats.distanceBetweenStuffY * 3
   );
-  ctx.fillText(
-    'HELMET: ' + stats.helmet,
-    stats.baseStats.distanceBetweenStuffX,
-    stats.baseStats.distanceBetweenStuffY * 4
-  );
-  ctx.fillText(
-    'GLOVES: ' + stats.gloves,
-    stats.baseStats.distanceBetweenStuffX,
-    stats.baseStats.distanceBetweenStuffY * 5
-  );
-  ctx.fillText(
-    'BOOTS: ' + stats.boots,
-    stats.baseStats.distanceBetweenStuffX,
-    stats.baseStats.distanceBetweenStuffY * 6
-  );
-  ctx.fillText('D: BACK', canvas.width * 0.05, canvas.height * 0.9);
 }
 
 function openCharState() {
   states.currentState = 'char';
 }
 
+function setButtons() {
+  stats.baseStats.dButton = 'D: BACK';
+  stats.baseStats.rButton = '';
+  stats.baseStats.gButton = '';
+  stats.baseStats.vButton = '';
+}
+
 export default {
   run: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawEquipState();
+    setButtons();
+    stats.functions.drawButtons();
   },
 
   d: openCharState,

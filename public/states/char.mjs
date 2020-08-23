@@ -8,7 +8,7 @@ function drawCharState() {
   ctx.font = 'bold 14px Arial';
   ctx.fillStyle = '#000000';
   ctx.fillText(
-    'Status: ' + stats.baseStats.status,
+    'STATUS: ' + stats.baseStats.status,
     stats.baseStats.distanceBetweenStuffX,
     stats.baseStats.distanceBetweenStuffY
   );
@@ -23,7 +23,10 @@ function drawCharState() {
     stats.baseStats.distanceBetweenStuffY * 3
   );
   ctx.fillText(
-    'DEF: ' + stats.baseStats.def,
+    'DEF: ' +
+      (stats.baseStats.def +
+        stats.equip.armor[stats.baseStats.currentArmor] +
+        stats.equip.shield[stats.baseStats.currentShield]),
     stats.baseStats.distanceBetweenStuffX,
     stats.baseStats.distanceBetweenStuffY * 4
   );
@@ -33,7 +36,7 @@ function drawCharState() {
     stats.baseStats.distanceBetweenStuffY * 5
   );
   ctx.fillText(
-    'ATTACK: ' + stats.baseStats.damage + stats.equip[stats.equip.currentWeapon].damage,
+    'ATTACK: ' + (stats.baseStats.baseDamage + stats.equip.weapon[stats.baseStats.currentWeapon]),
     stats.baseStats.distanceBetweenStuffX,
     stats.baseStats.distanceBetweenStuffY * 6
   );
@@ -72,8 +75,6 @@ function drawCharState() {
     stats.baseStats.distanceBetweenStuffX * 5,
     stats.baseStats.distanceBetweenStuffY * 6
   );
-  ctx.fillText('D: BACK', canvas.width * 0.05, canvas.height * 0.9);
-  ctx.fillText('G: EQUIPMENT', canvas.width * 0.25, canvas.height * 0.9);
 }
 
 function openMainState() {
@@ -82,11 +83,19 @@ function openMainState() {
 function openEquipState() {
   states.currentState = 'equip';
 }
+function setButtons() {
+  stats.baseStats.dButton = 'D: BACK';
+  stats.baseStats.rButton = '';
+  stats.baseStats.gButton = 'G: VIEW EQUIP';
+  stats.baseStats.vButton = '';
+}
 
 export default {
   run: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawCharState();
+    setButtons();
+    stats.functions.drawButtons();
   },
 
   d: openMainState,

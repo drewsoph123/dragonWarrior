@@ -5,7 +5,11 @@ var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
 function drawItems() {
-  const availableItems = stats.items.filter((item) => item.quantity);
+  const availableItems = stats.items.filter((item) => {
+    if (item.mainOnly == false && item.quantity > 0) {
+      return true;
+    }
+  });
   ctx.font = 'bold 14px Arial';
   ctx.fillStyle = '#000000';
   availableItems.forEach((item, index) => {
@@ -18,7 +22,7 @@ function drawItems() {
 }
 
 function mainUp() {
-  if (stats.baseStats.selectBoxY > stats.baseStats.selectBoxStartingY) {
+  if (stats.baseStats.selectBoxY > stats.baseStats.distanceBetweenStuffY / 2) {
     stats.baseStats.selectBoxY -= stats.baseStats.distanceBetweenStuffY;
     stats.baseStats.availableItemSelected -= 1;
   }
@@ -33,16 +37,15 @@ function mainDown() {
     stats.baseStats.availableItemSelected += 1;
   }
 }
-function openMainState() {
+function openBattleState() {
   stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
   stats.baseStats.availableItemSelected = 0;
-  states.currentState = 'main';
+  states.currentState = 'battle';
 }
-function openItemConfirmState() {
+function openBattleItemConfirmState() {
   stats.baseStats.selectBoxY = stats.baseStats.selectBoxStartingY;
-  states.currentState = 'itemConfirm';
+  states.currentState = 'battleItemConfirm';
 }
-
 function setButtons() {
   stats.baseStats.dButton = 'D: BACK';
   stats.baseStats.rButton = '';
@@ -61,6 +64,6 @@ export default {
 
   up: mainUp,
   down: mainDown,
-  d: openMainState,
-  g: openItemConfirmState,
+  d: openBattleState,
+  g: openBattleItemConfirmState,
 };
