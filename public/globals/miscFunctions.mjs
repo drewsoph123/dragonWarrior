@@ -9,6 +9,11 @@ export const functions = {
   drawButtons,
   enemyAttack,
   updateBattleMessage,
+  drawHero,
+  faceLeft,
+  faceUp,
+  faceDown,
+  faceRight,
 };
 
 function drawBox() {
@@ -24,7 +29,11 @@ function drawBox() {
 }
 function drawButtons() {
   ctx.font = 'bold 14px Arial';
-  ctx.fillStyle = '#000000';
+  if (baseStats.currentHp < baseStats.maxHp * 0.2) {
+    ctx.fillStyle = '#FF0000';
+  } else {
+    ctx.fillStyle = '#00FF00';
+  }
   ctx.fillText(baseStats.dButton, locations.leftButtonX, locations.leftButtonY);
   ctx.fillText(baseStats.gButton, locations.rightButtonX, locations.rightButtonY);
   ctx.fillText(baseStats.rButton, locations.topButtonX, locations.topButtonY);
@@ -87,4 +96,44 @@ function updateBattleMessage() {
       states.currentState = 'main';
     }
   }
+}
+
+function drawHero() {
+  baseStats.hero.src = './sprites/NESDragonWarriorCharactersUSA.png';
+  ctx.drawImage(
+    baseStats.hero,
+    baseStats.heroSpriteX,
+    baseStats.heroSpriteY,
+    baseStats.heroSpriteWidth,
+    baseStats.heroSpriteHeight,
+    (canvas.width - baseStats.heroWidth) / 2,
+    (canvas.height - baseStats.heroHeight) / 2,
+    baseStats.heroWidth,
+    baseStats.heroHeight
+  );
+}
+
+function faceDown() {
+  baseStats.heroSpriteX = 4;
+  baseStats.heroSpriteY = 4;
+  baseStats.heroSpriteWidth = 15;
+  baseStats.heroSpriteHeight = 15;
+}
+function faceUp() {
+  baseStats.heroSpriteX = 62;
+  baseStats.heroSpriteY = 4;
+  baseStats.heroSpriteWidth = 15;
+  baseStats.heroSpriteHeight = 15;
+}
+function faceLeft() {
+  baseStats.heroSpriteX = 34;
+  baseStats.heroSpriteY = 4;
+  baseStats.heroSpriteWidth = 15;
+  baseStats.heroSpriteHeight = 15;
+}
+function faceRight() {
+  baseStats.heroSpriteX = 94;
+  baseStats.heroSpriteY = 4;
+  baseStats.heroSpriteWidth = 15;
+  baseStats.heroSpriteHeight = 15;
 }

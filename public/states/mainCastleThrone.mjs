@@ -4,49 +4,30 @@ import states from './index.mjs';
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
-var mainMap = new Image();
-var mainMapHeight = 2700;
-var mainMapWidth = 2720;
-var mainMapX = -820;
-var mainMapY = -820;
-var mainMapSpriteX = 0;
-var mainMapSpriteY = 0;
-var mainMapSpriteWidth = 2176;
-var mainMapSpriteHeight = 2160;
+var mainCastleThrone = new Image();
+var mainCastleThroneHeight = 1885;
+var mainCastleThroneWidth = 1855;
+var mainCastleThroneX = 103;
+var mainCastleThroneY = 80;
+var mainCastleThroneSpriteX = 0;
+var mainCastleThroneSpriteY = 0;
+var mainCastleThroneSpriteWidth = 1650;
+var mainCastleThroneSpriteHeight = 1650;
 
 // var availableTalk = false;
 // var availableChest = false;
-function startBattle() {
-  if (
-    Math.random() <
-    stats.baseStats.battleOdds + stats.baseStats.repelEffect + stats.baseStats.incenseEffect
-  )
-    states.currentState = 'battle';
-}
-function stepCounter() {
-  if (stats.baseStats.incenseSteps > 0) {
-    stats.baseStats.incenseSteps -= 1;
-  } else if (stats.baseStats.repelSteps > 0) {
-    stats.baseStats.repelSteps -= 1;
-  } else {
-    stats.baseStats.repelEffect = 0;
-    stats.baseStats.incenseEffect = 0;
-  }
-}
 function mainRight() {
   if (
-    stats.mainMap[stats.baseStats.heroMainMapLocationY][
-      stats.baseStats.heroMainMapLocationX + 1
+    stats.mainCastleThroneMap[stats.baseStats.heroMainCastleThroneMapLocationY][
+      stats.baseStats.heroMainCastleThroneMapLocationX + 1
     ] === 0
   ) {
-    stats.baseStats.heroMainMapLocationX += 1;
+    stats.baseStats.heroMainCastleThroneMapLocationX += 1;
     stats.functions.faceRight();
-    mainMapX -= 20;
-    startBattle();
-    stepCounter();
+    mainCastleThroneX -= 20;
   } else if (
-    stats.mainMap[stats.baseStats.heroMainMapLocationY][
-      stats.baseStats.heroMainMapLocationX + 1
+    stats.mainCastleThroneMap[stats.baseStats.heroMainCastleThroneMapLocationY][
+      stats.baseStats.heroMainCastleThroneMapLocationX + 1
     ] === 2
   ) {
     states.currentState = 'mainCastleLobby';
@@ -54,59 +35,35 @@ function mainRight() {
 }
 function mainLeft() {
   if (
-    stats.mainMap[stats.baseStats.heroMainMapLocationY][
-      stats.baseStats.heroMainMapLocationX - 1
+    stats.mainCastleThroneMap[stats.baseStats.heroMainCastleThroneMapLocationY][
+      stats.baseStats.heroMainCastleThroneMapLocationX - 1
     ] === 0
   ) {
-    stats.baseStats.heroMainMapLocationX -= 1;
+    stats.baseStats.heroMainCastleThroneMapLocationX -= 1;
     stats.functions.faceLeft();
-    mainMapX += 20;
-    startBattle();
-    stepCounter();
-  } else if (
-    stats.mainMap[stats.baseStats.heroMainMapLocationY][
-      stats.baseStats.heroMainMapLocationX - 1
-    ] === 2
-  ) {
-    states.currentState = 'mainCastleLobby';
+    mainCastleThroneX += 20;
   }
 }
 function mainUp() {
   if (
-    stats.mainMap[stats.baseStats.heroMainMapLocationY - 1][
-      stats.baseStats.heroMainMapLocationX
+    stats.mainCastleThroneMap[stats.baseStats.heroMainCastleThroneMapLocationY - 1][
+      stats.baseStats.heroMainCastleThroneMapLocationX
     ] === 0
   ) {
-    stats.baseStats.heroMainMapLocationY -= 1;
+    stats.baseStats.heroMainCastleThroneMapLocationY -= 1;
     stats.functions.faceUp();
-    mainMapY += 20;
-    startBattle();
-    stepCounter();
-  } else if (
-    stats.mainMap[stats.baseStats.heroMainMapLocationY - 1][
-      stats.baseStats.heroMainMapLocationX
-    ] === 2
-  ) {
-    states.currentState = 'mainCastleLobby';
+    mainCastleThroneY += 20;
   }
 }
 function mainDown() {
   if (
-    stats.mainMap[stats.baseStats.heroMainMapLocationY + 1][
-      stats.baseStats.heroMainMapLocationX
+    stats.mainCastleThroneMap[stats.baseStats.heroMainCastleThroneMapLocationY + 1][
+      stats.baseStats.heroMainCastleThroneMapLocationX
     ] === 0
   ) {
-    stats.baseStats.heroMainMapLocationY += 1;
+    stats.baseStats.heroMainCastleThroneMapLocationY += 1;
     stats.functions.faceDown();
-    mainMapY -= 20;
-    startBattle();
-    stepCounter();
-  } else if (
-    stats.mainMap[stats.baseStats.heroMainMapLocationY + 1][
-      stats.baseStats.heroMainMapLocationX
-    ] === 2
-  ) {
-    states.currentState = 'mainCastleLobby';
+    mainCastleThroneY -= 20;
   }
 }
 function openSkillState() {
@@ -199,49 +156,18 @@ function drawNextLevel() {
   );
 }
 
-function drawRepelStepsRemaining() {
-  if (stats.baseStats.repelSteps > 0) {
-    ctx.font = 'bold 14px Arial';
-    if (stats.baseStats.currentHp < stats.baseStats.maxHp * 0.2) {
-      ctx.fillStyle = '#FF0000';
-    } else {
-      ctx.fillStyle = '#00FF00';
-    }
-    ctx.fillText(
-      'REPEL STEPS: ' + stats.baseStats.repelSteps,
-      canvas.width * 0.65,
-      stats.locations.mainGeneralStartingY
-    );
-  }
-}
-function drawIncenseStepsRemaining() {
-  if (stats.baseStats.incenseSteps > 0) {
-    ctx.font = 'bold 14px Arial';
-    if (stats.baseStats.currentHp < stats.baseStats.maxHp * 0.2) {
-      ctx.fillStyle = '#FF0000';
-    } else {
-      ctx.fillStyle = '#00FF00';
-    }
-    ctx.fillText(
-      'INCENSE STEPS: ' + stats.baseStats.incenseSteps,
-      canvas.width * 0.65,
-      stats.locations.mainGeneralStartingY * 2
-    );
-  }
-}
-
-function drawMainMap() {
-  mainMap.src = './sprites/NESDragonWarriorOverworld.png';
+function drawMainCastleThrone() {
+  mainCastleThrone.src = './sprites/mainCastleThroneMap.png';
   ctx.drawImage(
-    mainMap,
-    mainMapSpriteX,
-    mainMapSpriteY,
-    mainMapSpriteWidth,
-    mainMapSpriteHeight,
-    mainMapX,
-    mainMapY,
-    mainMapWidth,
-    mainMapHeight
+    mainCastleThrone,
+    mainCastleThroneSpriteX,
+    mainCastleThroneSpriteY,
+    mainCastleThroneSpriteWidth,
+    mainCastleThroneSpriteHeight,
+    mainCastleThroneX,
+    mainCastleThroneY,
+    mainCastleThroneWidth,
+    mainCastleThroneHeight
   );
 }
 function setButtons() {
@@ -253,7 +179,7 @@ function setButtons() {
 export default {
   run: function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawMainMap();
+    drawMainCastleThrone();
     stats.functions.drawHero();
     drawBoxAroundStats();
     drawHp();
@@ -264,8 +190,6 @@ export default {
     drawNextLevel();
     setButtons();
     stats.functions.drawButtons();
-    drawIncenseStepsRemaining();
-    drawRepelStepsRemaining();
   },
   right: mainRight,
   left: mainLeft,

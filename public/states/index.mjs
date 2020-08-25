@@ -1,4 +1,7 @@
 import main from './main.mjs';
+import mainCastleThrone from './mainCastleThrone.mjs';
+import mainCastleLobby from './mainCastleLobby.mjs';
+import mainCastleSpecialRoom from './mainCastleSpecialRoom.mjs';
 import char from './char.mjs';
 import items from './items.mjs';
 import talk from './talk.mjs';
@@ -16,6 +19,9 @@ import battleRunConfirm from './battleRunConfirm.mjs';
 
 export default {
   main,
+  mainCastleThrone,
+  mainCastleLobby,
+  mainCastleSpecialRoom,
   char,
   items,
   talk,

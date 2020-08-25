@@ -1,7 +1,7 @@
 import states from './states/index.mjs';
 import keyMappings from './keyMappings.mjs';
 
-states.currentState = 'main';
+states.currentState = 'mainCastleThrone';
 // const gameContinues = true;
 document.addEventListener('keydown', keyDownHandler, false);
 

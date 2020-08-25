@@ -3,8 +3,12 @@ import expTable from './expTable.mjs';
 var canvas = document.getElementById('myCanvas');
 
 const baseStats = {
-  heroMainMapLocationX: 15,
-  heroMainMapLocationY: 15,
+  heroMainMapLocationX: 56,
+  heroMainMapLocationY: 56,
+  heroMainCastleThroneMapLocationX: 5,
+  heroMainCastleThroneMapLocationY: 6,
+  heroMainCastleLobbyMapLocationX: 7,
+  heroMainCastleLobbyMapLocationY: 8,
   selectBoxHeight: canvas.height * 0.08,
   selectBoxWidth: canvas.width * 0.45,
   selectBoxStartingY: canvas.height * 0.05,
@@ -48,13 +52,15 @@ const baseStats = {
   accuracy: 0.75,
   resist: 0.25,
   status: 'healthy',
-  battleOdds: 0, //0.15,
+  battleOdds: 0.05,
   totalSkills: 0,
   totalItems: 0,
   chest: false,
   itemDamage: 0,
   currentHp: 10,
   attackName: 'none',
+  availableTalk: false,
+  availableChest: false,
   enemyTurn: false,
   enemyPresent: false,
   enemyName: 'none',
@@ -64,6 +70,15 @@ const baseStats = {
   enemyExperience: 0,
   enemyGold: 0,
   baseDamage: 5,
+  hero: new Image(),
+  heroHeight: 20,
+  heroWidth: 20,
+  heroX: (canvas.width - 20) / 2,
+  heroY: (canvas.height - 20) / 2,
+  heroSpriteX: 4,
+  heroSpriteY: 4,
+  heroSpriteWidth: 15,
+  heroSpriteHeight: 15,
 };
 setLevelByExperience();
 export default baseStats;

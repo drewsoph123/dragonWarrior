@@ -6,3 +6,6 @@
 // git push // sends data to github
 
 // git pull // retrieves most up-to-date files from github
+
+
+//nodemon .\server.js
