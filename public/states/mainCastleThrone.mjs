@@ -5,8 +5,8 @@ var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d');
 
 var mainCastleThrone = new Image();
-var mainCastleThroneHeight = 1885;
-var mainCastleThroneWidth = 1855;
+var mainCastleThroneHeight = 1100;
+var mainCastleThroneWidth = 1100;
 var mainCastleThroneX = 103;
 var mainCastleThroneY = 80;
 var mainCastleThroneSpriteX = 0;
