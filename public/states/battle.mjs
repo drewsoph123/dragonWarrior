@@ -10,10 +10,10 @@ var enemyHeight = canvas.width * 0.5;
 var enemyWidth = canvas.height * 0.5;
 var enemyX = canvas.width * 0.25;
 var enemyY = canvas.height * 0.15;
-var enemySpriteX = 26;
-var enemySpriteY = 4;
-var enemySpriteWidth = 15;
-var enemySpriteHeight = 15;
+var enemySpriteX = 0;
+var enemySpriteY = 0;
+var enemySpriteWidth = 240;
+var enemySpriteHeight = 320;
 
 function determineEnemy() {
   if (stats.baseStats.enemyPresent == false) {
@@ -30,6 +30,7 @@ function determineEnemy() {
         stats.baseStats.enemyExperience = stats.enemy[i].experience;
         stats.baseStats.enemyGold = stats.enemy[i].gold;
         stats.baseStats.enemyAttackType = stats.enemy[i].attackType;
+        stats.baseStats.enemySource = stats.enemy[i].source;
         stats.baseStats.battleMessageToDisplayPartOne = `UH OH, YOU CAME ACROSS A ${stats.baseStats.enemyName}`;
         stats.baseStats.battleMessageToDisplayPartTwo = 'AND HE WANTS TO FIGHT!';
         stats.baseStats.battleMessageToDisplayPartThree = '';
@@ -96,7 +97,7 @@ function drawMp() {
   );
 }
 function drawEnemy() {
-  enemy.src = './sprites/NESDragonWarriorMonsters.png';
+  enemy.src = stats.baseStats.enemySource;
   ctx.drawImage(
     enemy,
     enemySpriteX,

@@ -1,6 +1,7 @@
 export const enemy = [
   {
-    name: 'GREEN SLIME',
+    name: 'BANANA STICK ISAAC',
+    source: './sprites/bananaStickIsaac.jpeg',
     hp: 10,
     attackType: 'ATTACKED',
     attackDamage: 1,
@@ -9,7 +10,8 @@ export const enemy = [
     gold: 5,
   },
   {
-    name: 'RED SLIME',
+    name: 'SHOTGUN DREW',
+    source: './sprites/shotgunDrew.jpeg',
     hp: 10,
     attackType: 'CAST FIRE SPELL',
     attackDamage: 1,
@@ -17,13 +19,13 @@ export const enemy = [
     experience: 3,
     gold: 5,
   },
-  {
-    name: 'BLUE SLIME',
-    hp: 10,
-    attackType: 'CAST ICE SPELL',
-    attackDamage: 1,
-    speed: 3,
-    experience: 3,
-    gold: 5,
-  },
+  // {
+  //   name: 'BLUE SLIME',
+  //   hp: 10,
+  //   attackType: 'CAST ICE SPELL',
+  //   attackDamage: 1,
+  //   speed: 3,
+  //   experience: 3,
+  //   gold: 5,
+  // },
 ];
